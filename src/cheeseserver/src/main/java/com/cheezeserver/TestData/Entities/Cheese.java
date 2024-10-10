@@ -3,6 +3,7 @@ package com.cheezeserver.TestData.Entities;
 import java.util.List;
 
 public record Cheese(
+    String Id,
     String Name,
     String Description,
     String Type,

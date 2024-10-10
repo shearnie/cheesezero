@@ -1,6 +1,7 @@
 package com.cheezeserver.services.Catalog;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,9 +22,30 @@ public class SearchCheeseMock implements ISearchCheese
         var ret = new ArrayList<Item>();
         for (Cheese cheese: source)
         {
-            ret.add(new Item(cheese.Name(), cheese.Description(), cheese.Type(), cheese.Country(), cheese.Milk(), cheese.Texture(), cheese.Colour(), cheese.PricePerKilo(), cheese.ImagePath()));
+            ret.add(new Item(cheese.Id(), cheese.Name(), cheese.Description(), cheese.Type(), cheese.Country(), cheese.Milk(), cheese.Texture(), cheese.Colour(), cheese.PricePerKilo(), cheese.ImagePath()));
         }
         return ret;
+    }
+    
+    public Item GetById(String id)
+    {        
+        var db = new Cheeses();
+
+        if (StringUtils.isEmpty(id))
+        {
+            return new Item("", "", "", "", "", Arrays.asList(), Arrays.asList(), "", 0.0, "");
+        }
+        
+        var rs = db.Data.stream()
+            .filter(i -> i.Id().equalsIgnoreCase(id))
+            .collect(Collectors.toList());
+
+        if (rs.size() == 0)
+        {
+            return new Item("", "", "", "", "", Arrays.asList(), Arrays.asList(), "", 0.0, "");
+        }
+
+        return Map(rs).get(0);
     }
 
     public ListingResponse Query(String query)
@@ -35,9 +57,11 @@ public class SearchCheeseMock implements ISearchCheese
             return new ListingResponse(Map(db.Data));
         }
         
+        var rs = db.Data.stream()
+            .filter(i -> i.Name().toLowerCase().contains(query.toLowerCase()))
+            .collect(Collectors.toList());
 
-        // TODO implement find
-        return new ListingResponse(Map(db.Data));
+        return new ListingResponse(Map(rs));
     }
 
     public ListingResponse GetByType(String type)

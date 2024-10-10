@@ -3,6 +3,7 @@ package com.cheezeserver.services.Catalog.Models;
 import java.util.List;
 
 public record Item(
+    String Id,
     String Name,
     String Description,
     String Type,

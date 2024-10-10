@@ -1,0 +1,88 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.cheese-link {
+  text-decoration: none;
+  color:#282c34;
+}
+
+.cheese-image {
+  box-shadow: 5px 5px 5px #444;
+  width: 220px;
+  height: 157px;
+}
+
+.cheese-big-image {
+  box-shadow: 5px 5px 5px #444;
+  width: 100%;
+  max-width: 600px;
+}
+
+.cheese-list-header {
+  margin: auto;
+  width: 220px;
+  height: 50px;
+}
+
+
+ul.summary-points {
+    padding: 0;
+}
+
+.description a,
+.summary-points a {
+    text-decoration: underline;
+}
+
+.summary-points li {
+    list-style: none;
+    margin-bottom: 10px;
+}
+
+.summary-points li p {
+    float: left;
+    width: 92%;
+}
+
+.summary-points li i {
+    float: left;
+    text-align: center;
+    padding-top: 3px;
+    width: 8%;
+}
