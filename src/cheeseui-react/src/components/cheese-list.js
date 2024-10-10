@@ -19,7 +19,7 @@ const CheeseList = ({ showLoading, cheeses }) => {
                 <div className="grid row">
                     {cheeses.map(cheese => (
                         <div key={cheese.Name} className="col-sm-6 col-md-4 text-center">
-                            <a className="cheese-link" href={'view?id=' + cheese.Id}>
+                            <a className="cheese-link" href={'/view?id=' + cheese.Id}>
                                 <div className="p-3 mb-3">
                                     <p className="cheese-list-header text-center">
                                         <strong>
