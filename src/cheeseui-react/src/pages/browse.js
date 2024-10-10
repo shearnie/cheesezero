@@ -5,6 +5,7 @@ import config from "../config.json";
 const Browse = () => {
     const [cheeseList, setCheeseList] = useState({});
     const [cheeseLoading, setCheeseLoading] = useState({});
+    const [cheeseLoadError, setCheeseLoadError] = useState("");
     
     useEffect(() => {
         document.title = `Cheese Zero`;
@@ -12,15 +13,22 @@ const Browse = () => {
         setCheeseLoading(true);
 
         const getList = async () => {
-            const response = await fetch(
+            return await fetch(
                  config.ApiBaseUrl + '/catalog/query?q='
             );
-            const rs = await response.json();
-            setCheeseList(rs.Items);
-            setCheeseLoading(false);
         };
 
-        getList();
+        getList()
+            .then(async (response) => {
+                const rs = await response.json();
+                setCheeseList(rs.Items);
+            })
+            .catch(error => {
+                setCheeseLoadError(error.message);
+            })
+            .finally(() => {
+                setCheeseLoading(false);
+            });
     }, []);
 
     return (
@@ -29,7 +37,7 @@ const Browse = () => {
                 Browse All Cheeses
             </h3>
 
-            <CheeseList showLoading={cheeseLoading} cheeses={cheeseList} />
+            <CheeseList showLoading={cheeseLoading} loadError={cheeseLoadError} cheeses={cheeseList} />
         </div>
     );
 };

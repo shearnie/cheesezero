@@ -5,6 +5,7 @@ import { useSearchParams } from 'react-router-dom';
 const View = () => {
     const [cheese, setCheese] = useState({});
     const [cheeseLoading, setCheeseLoading] = useState({});
+    const [cheeseLoadError, setCheeseLoadError] = useState("");
     const [kilos, setKilos] = useState("1");
     const [searchParams] = useSearchParams();
     var id = searchParams.get('id');
@@ -21,20 +22,25 @@ const View = () => {
         document.title = `Cheese Zero`;
 
         setCheeseLoading(true);
-
+        
         const getCheese = async () => {
-            const response = await fetch(
-                 config.ApiBaseUrl + '/catalog/details?id=' + id
+            return await fetch(
+                config.ApiBaseUrl + '/catalog/details?id=' + id
             );
-            const rs = await response.json();
-            setCheese(rs);
-            document.title = cheese.id === ""
-                ? `Wrong cheese`
-                : cheese.name;
-            setCheeseLoading(false);
         };
 
-        getCheese();
+        getCheese()
+            .then(async (response) => {
+                const rs = await response.json();
+                setCheese(rs);
+                document.title = rs.name;
+            })
+            .catch(error => {
+                setCheeseLoadError(error.message);
+            })
+            .finally(() => {
+                setCheeseLoading(false);
+            });
     }, []);
 
     return (
@@ -51,7 +57,12 @@ const View = () => {
                     Wrong cheese.
                 </p>
             }
-            {!cheeseLoading && (cheese.Id !== "") &&
+            {(cheeseLoadError !== "") &&
+                <p className="text-danger">
+                    Error: {cheeseLoadError}
+                </p>
+            }
+            {!cheeseLoading && (cheeseLoadError === "") && (cheese.Id !== "") &&
                 <>
                     <h3>
                         {cheese.name}
@@ -66,7 +77,7 @@ const View = () => {
                                 <ul className="summary-points">
                                     <li className="summary_milk">
                                         <i className="fa fa-flask"></i>
-                                        <p>Made from {cheese.milk.join(", ")} milk</p>
+                                        <p>Made from {(cheese.milk ?? []).join(", ")} milk</p>
                                     </li>
                                     
                                     <li className="summary_country">
@@ -81,7 +92,7 @@ const View = () => {
 
                                     <li className="summary_texture">
                                         <i className="fa fa-pie-chart"></i>
-                                        <p>Texture: {cheese.texture.join(", ")}</p>
+                                        <p>Texture: {(cheese.texture ?? []).join(", ")}</p>
                                     </li>
 
                                     <li className="summary_tint">
