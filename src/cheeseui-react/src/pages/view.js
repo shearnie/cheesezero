@@ -28,9 +28,9 @@ const View = () => {
             );
             const rs = await response.json();
             setCheese(rs);
-            document.title = cheese.Id === ""
+            document.title = cheese.id === ""
                 ? `Wrong cheese`
-                : cheese.Name;
+                : cheese.name;
             setCheeseLoading(false);
         };
 
@@ -54,45 +54,45 @@ const View = () => {
             {!cheeseLoading && (cheese.Id !== "") &&
                 <>
                     <h3>
-                        {cheese.Name}
+                        {cheese.name}
                     </h3>
                     <hr />
                     <div className='row'>
                         <div className='col-md-6'>
-                            <img className='cheese-big-image' src={cheese.ImagePath} alt={cheese.Name} />
+                            <img className='cheese-big-image' src={cheese.imagePath} alt={cheese.name} />
                         </div>
                         <div className='col-md-6'>
                             <div style={{display: 'flow-root'}}>
                                 <ul className="summary-points">
                                     <li className="summary_milk">
                                         <i className="fa fa-flask"></i>
-                                        <p>Made from {cheese.Milk.join(", ")} milk</p>
+                                        <p>Made from {cheese.milk.join(", ")} milk</p>
                                     </li>
                                     
                                     <li className="summary_country">
                                         <i className="fa fa-flag"></i>
-                                        <p>Country of origin: {cheese.Country}</p>
+                                        <p>Country of origin: {cheese.country}</p>
                                     </li>
 
                                     <li className="summary_moisture_and_type">
                                         <i className="fa fa-folder"></i>
-                                        <p>Type: {cheese.Type}</p>
+                                        <p>Type: {cheese.type}</p>
                                     </li>
 
                                     <li className="summary_texture">
                                         <i className="fa fa-pie-chart"></i>
-                                        <p>Texture: {cheese.Texture.join(", ")}</p>
+                                        <p>Texture: {cheese.texture.join(", ")}</p>
                                     </li>
 
                                     <li className="summary_tint">
                                         <i className="fa fa-tint"></i>
-                                        <p>Colour: {cheese.Colour}</p>
+                                        <p>Colour: {cheese.colour}</p>
                                     </li>
 
                                     <li className="summary_tint">
                                         <i className="fa-solid fa-dollar-sign"></i>
                                         <p>
-                                            Price Per Kilo: {cheese.PricePerKilo}
+                                            Price Per Kilo: {cheese.pricePerKilo}
                                             <br></br>
 
                                             <div className='mt-3'>
@@ -110,7 +110,7 @@ const View = () => {
 
                                             <div className='mt-2'>
                                                 <strong>
-                                                    Total cost: ${round(cheese.PricePerKilo * kilos)}
+                                                    Total cost: ${round(cheese.pricePerKilo * kilos)}
                                                 </strong>
                                             </div>
                                         </p>
@@ -119,7 +119,7 @@ const View = () => {
                             </div>
                             
                             <p className='mt-4'>
-                                {cheese.Description}
+                                {cheese.description}
                             </p>
 
                         </div>
