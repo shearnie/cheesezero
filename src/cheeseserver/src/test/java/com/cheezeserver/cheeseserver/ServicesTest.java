@@ -36,22 +36,22 @@ class ServicesTest {
 	public void GetById_Blank()
 	{
 		var rs = searchCheese.GetById("");
-		assertThat(rs.Id()).isEqualTo("");
+		assertThat(rs.id()).isEqualTo("");
 	}
 
 	@Test
 	public void GetById_Bogus()
 	{
 		var rs = searchCheese.GetById("blahblah");
-		assertThat(rs.Id()).isEqualTo("");
+		assertThat(rs.id()).isEqualTo("");
 	}
 
 	@Test
 	public void GetById_Valid()
 	{
 		var rs = searchCheese.GetById("42cec8b8-f350-4ce8-a60c-8220df2b4e57");
-		assertThat(rs.Id()).isEqualTo("42cec8b8-f350-4ce8-a60c-8220df2b4e57");
-		assertThat(rs.Name()).isEqualTo("Roaring Forties Blue");
+		assertThat(rs.id()).isEqualTo("42cec8b8-f350-4ce8-a60c-8220df2b4e57");
+		assertThat(rs.name()).isEqualTo("Roaring Forties Blue");
 	}
 
 	@Test

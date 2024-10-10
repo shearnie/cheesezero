@@ -22,7 +22,7 @@ public class SearchCheeseMock implements ISearchCheese
         var ret = new ArrayList<Item>();
         for (Cheese cheese: source)
         {
-            ret.add(new Item(cheese.Id(), cheese.Name(), cheese.Description(), cheese.Type(), cheese.Country(), cheese.Milk(), cheese.Texture(), cheese.Colour(), cheese.PricePerKilo(), cheese.ImagePath()));
+            ret.add(new Item(cheese.id(), cheese.name(), cheese.description(), cheese.type(), cheese.country(), cheese.milk(), cheese.texture(), cheese.colour(), cheese.pricePerKilo(), cheese.imagePath()));
         }
         return ret;
     }
@@ -37,7 +37,7 @@ public class SearchCheeseMock implements ISearchCheese
         }
         
         var rs = db.Data.stream()
-            .filter(i -> i.Id().equalsIgnoreCase(id))
+            .filter(i -> i.id().equalsIgnoreCase(id))
             .collect(Collectors.toList());
 
         if (rs.size() == 0)
@@ -58,7 +58,7 @@ public class SearchCheeseMock implements ISearchCheese
         }
         
         var rs = db.Data.stream()
-            .filter(i -> i.Name().toLowerCase().contains(query.toLowerCase()))
+            .filter(i -> i.name().toLowerCase().contains(query.toLowerCase()))
             .collect(Collectors.toList());
 
         return new ListingResponse(Map(rs));
@@ -74,7 +74,7 @@ public class SearchCheeseMock implements ISearchCheese
         }
 
         var rs = db.Data.stream()
-            .filter(i -> i.Type().equalsIgnoreCase(type.replace("-", " ")))
+            .filter(i -> i.type().equalsIgnoreCase(type.replace("-", " ")))
             .collect(Collectors.toList());
 
         return new ListingResponse(Map(rs));
@@ -90,7 +90,7 @@ public class SearchCheeseMock implements ISearchCheese
         }
 
         var rs = db.Data.stream()
-            .filter(i -> i.Country().equalsIgnoreCase(country.replace("-", " ")))
+            .filter(i -> i.country().equalsIgnoreCase(country.replace("-", " ")))
             .collect(Collectors.toList());
 
         return new ListingResponse(Map(rs));
@@ -107,7 +107,7 @@ public class SearchCheeseMock implements ISearchCheese
 
         var rs = db.Data.stream()
             .filter(i -> {
-                    var matchingTexture = i.Milk().stream()
+                    var matchingTexture = i.milk().stream()
                         .filter(t -> t.equalsIgnoreCase(milk.replace("-", " ")));
                     return matchingTexture.count() > 0;
                 })
@@ -127,7 +127,7 @@ public class SearchCheeseMock implements ISearchCheese
 
         var rs = db.Data.stream()
             .filter(i -> {
-                    var matchingTexture = i.Texture().stream()
+                    var matchingTexture = i.texture().stream()
                         .filter(t -> t.equalsIgnoreCase(texture.replace("-", " ")));
                     return matchingTexture.count() > 0;
                 })
@@ -146,7 +146,7 @@ public class SearchCheeseMock implements ISearchCheese
         }
 
         var rs = db.Data.stream()
-            .filter(i -> i.Colour().equalsIgnoreCase(colour.replace("-", " ")))
+            .filter(i -> i.colour().equalsIgnoreCase(colour.replace("-", " ")))
             .collect(Collectors.toList());
 
         return new ListingResponse(Map(rs));

@@ -18,15 +18,15 @@ const CheeseList = ({ showLoading, cheeses }) => {
             {!showLoading && (cheeses.length > 0) &&
                 <div className="grid row">
                     {cheeses.map(cheese => (
-                        <div key={cheese.Name} className="col-sm-6 col-md-4 text-center">
-                            <a className="cheese-link" href={'/view?id=' + cheese.Id}>
+                        <div key={cheese.name} className="col-sm-6 col-md-4 text-center">
+                            <a className="cheese-link" href={'/view?id=' + cheese.id}>
                                 <div className="p-3 mb-3">
                                     <p className="cheese-list-header text-center">
                                         <strong>
-                                            {cheese.Name}
+                                            {cheese.name}
                                         </strong>
                                     </p>
-                                    <img className="cheese-image" src={cheese.ImagePath} alt={cheese.Name} />
+                                    <img className="cheese-image" src={cheese.imagePath} alt={cheese.name} />
                                 </div>
                             </a>
                         </div>
