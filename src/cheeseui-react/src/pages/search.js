@@ -6,6 +6,7 @@ import { useSearchParams } from 'react-router-dom';
 const Search = () => {
     const [cheeseList, setCheeseList] = useState({});
     const [cheeseLoading, setCheeseLoading] = useState({});
+    const [cheeseLoadError, setCheeseLoadError] = useState("");
     const [searchParams] = useSearchParams();
     var q = searchParams.get('q');
     
@@ -15,15 +16,22 @@ const Search = () => {
         setCheeseLoading(true);
 
         const getList = async () => {
-            const response = await fetch(
+            return await fetch(
                  config.ApiBaseUrl + '/catalog/query?q=' + q
             );
-            const rs = await response.json();
-            setCheeseList(rs.Items);
-            setCheeseLoading(false);
         };
 
-        getList();
+        getList()
+            .then(async (response) => {
+                const rs = await response.json();
+                setCheeseList(rs.Items);
+            })
+            .catch(error => {
+                setCheeseLoadError(error.message);
+            })
+            .finally(() => {
+                setCheeseLoading(false);
+            });
     }, []);
 
     return (
@@ -32,7 +40,7 @@ const Search = () => {
                 Search Cheeses
             </h3>
 
-            <CheeseList showLoading={cheeseLoading} cheeses={cheeseList} />
+            <CheeseList showLoading={cheeseLoading} loadError={cheeseLoadError} cheeses={cheeseList} />
         </div>
     );
 };

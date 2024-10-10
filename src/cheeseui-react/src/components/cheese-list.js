@@ -1,6 +1,6 @@
 import React from "react";
 
-const CheeseList = ({ showLoading, cheeses }) => {
+const CheeseList = ({ showLoading, loadError, cheeses }) => {
     return (
         <>
             {showLoading &&
@@ -13,6 +13,11 @@ const CheeseList = ({ showLoading, cheeses }) => {
             {!showLoading && (cheeses.length === 0) &&
                 <p>
                    No cheeses found.
+                </p>
+            }
+            {(loadError !== "") &&
+                <p className="text-danger">
+                    Error: {loadError}
                 </p>
             }
             {!showLoading && (cheeses.length > 0) &&
@@ -33,7 +38,6 @@ const CheeseList = ({ showLoading, cheeses }) => {
                     ))}
                 </div>
             }
-
         </>
     );
 };

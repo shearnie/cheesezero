@@ -6,28 +6,35 @@ import config from "../config.json";
 const ByType = () => {
     const [cheeseList, setCheeseList] = useState({});
     const [cheeseLoading, setCheeseLoading] = useState({});
+    const [cheeseLoadError, setCheeseLoadError] = useState("");
     const { cheesetype } = useParams();
-
     
     useEffect(() => {
         document.title = `Cheese Zero`;
 
         setCheeseLoading(true);
-
+        
         const url = (cheesetype == undefined)
             ? '/catalog/bytype' 
             : '/catalog/bytype/' + cheesetype;
 
         const getList = async () => {
-            const response = await fetch(
+            return await fetch(
                  config.ApiBaseUrl + url
             );
-            const rs = await response.json();
-            setCheeseList(rs.Items);
-            setCheeseLoading(false);
         };
 
-        getList();
+        getList()
+            .then(async (response) => {
+                const rs = await response.json();
+                setCheeseList(rs.Items);
+            })
+            .catch(error => {
+                setCheeseLoadError(error.message);
+            })
+            .finally(() => {
+                setCheeseLoading(false);
+            });
     }, []);
 
     // TODO get types from API
@@ -62,7 +69,7 @@ const ByType = () => {
                     Semi Firm
                 </a>
             </div>
-            <CheeseList showLoading={cheeseLoading} cheeses={cheeseList} />
+            <CheeseList showLoading={cheeseLoading} loadError={cheeseLoadError} cheeses={cheeseList} />
         </div>
     );
 }
